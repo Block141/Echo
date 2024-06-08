@@ -1,3 +1,5 @@
-from django.shortcuts import render
+# news/views.py
+from django.http import HttpResponse
 
-# Create your views here.
+def index(request):
+    return HttpResponse("This is the news index page.")

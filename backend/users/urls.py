@@ -1,7 +1,8 @@
-
+# users/urls.py
 from django.urls import path
-from .views import UserProfileView
+from . import api_views
 
 urlpatterns = [
-    path('profile/', UserProfileView.as_view(), name='user-profile'),
+    path('auth/signup/', api_views.signup, name='signup'),
+    path('auth/csrf/', api_views.set_csrf_token, name='set_csrf_token'),
 ]

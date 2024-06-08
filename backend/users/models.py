@@ -9,3 +9,4 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     interests = models.ManyToManyField(Interest)
     location = models.CharField(max_length=100)
+    initial_setup_complete = models.BooleanField(default=False)

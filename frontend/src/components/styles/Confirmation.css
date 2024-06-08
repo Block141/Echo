@@ -1,0 +1,26 @@
+/* src/styles/Confirmation.css */
+.confirmation-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .confirmation-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .confirmation-container p {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .confirmation-container a {
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .confirmation-container a:hover {
+    text-decoration: underline;
+  }
+  
