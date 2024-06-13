@@ -89,3 +89,5 @@ def mark_setup_complete(request):
         return Response({'message': 'Initial setup marked as complete'}, status=status.HTTP_200_OK)
     except UserProfile.DoesNotExist:
         return Response({'error': 'User profile not found'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    

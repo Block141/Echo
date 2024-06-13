@@ -1,17 +1,69 @@
-// src/components/InterestSelector.jsx
 import React, { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import axios from 'axios';
+import './styles/InterestSelector.css';
 
 const InterestSelector = () => {
   const [interests, setInterests] = useState([]);
   const [currentInterestIndex, setCurrentInterestIndex] = useState(0);
-  const availableInterests = ['Politics', 'Technology', 'Automotive']; // Example interests
+  const [swipeDirection, setSwipeDirection] = useState(null);
+  const [dragging, setDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [animate, setAnimate] = useState(true);
+  const [completed, setCompleted] = useState(false);
+  const availableInterests = [
+    'Politics', 'Technology', 'Automotive', 'Sports', 'Health', 'Travel',
+    'Science', 'Entertainment', 'Fashion', 'Finance', 'Food', 'Gaming', 
+    'History', 'Music', 'Nature', 'Photography', 'Space', 'Startup', 'World News'
+  ];
+
+  const SWIPE_RESET_DELAY = 500; 
 
   const handleSwipe = (direction) => {
-    if (direction === 'right') {
-      setInterests([...interests, availableInterests[currentInterestIndex]]);
+    setSwipeDirection(direction);
+    setAnimate(false); // Disable animation
+    setTimeout(async () => {
+      if (direction === 'right') {
+        setInterests([...interests, availableInterests[currentInterestIndex]]);
+      }
+      const nextIndex = currentInterestIndex + 1;
+      if (nextIndex < availableInterests.length) {
+        setCurrentInterestIndex(nextIndex);
+      } else {
+        await handleSubmit();
+        setCompleted(true);
+      }
+      setSwipeDirection(null);
+      setPosition({ x: 0, y: 0 });
+      setOffset({ x: 0, y: 0 });
+      setAnimate(true); // Re-enable animation
+    }, SWIPE_RESET_DELAY); // Delay to match the animation duration
+  };
+
+  const handleDragStart = (e) => {
+    setDragging(true);
+    setOffset({ x: e.clientX - position.x, y: e.clientY - position.y });
+  };
+
+  const handleDrag = (e) => {
+    if (dragging) {
+      const x = e.clientX - offset.x;
+      const y = e.clientY - offset.y;
+      setPosition({ x, y });
     }
-    setCurrentInterestIndex(currentInterestIndex + 1);
+  };
+
+  const handleDragEnd = (e) => {
+    setDragging(false);
+    const threshold = window.innerWidth / 4;
+    if (position.x > threshold) {
+      handleSwipe('right');
+    } else if (position.x < -threshold) {
+      handleSwipe('left');
+    } else {
+      setPosition({ x: 0, y: 0 });
+    }
   };
 
   const handleSubmit = async () => {
@@ -19,23 +71,52 @@ const InterestSelector = () => {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/save-interests/`, { interests });
       console.log(response.data);
     } catch (error) {
-      console.error('Error saving interests:', error);
+      console.error(error);
     }
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => handleSwipe('left'),
+    onSwipedRight: () => handleSwipe('right'),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
+  if (completed) {
+    return (
+      <div className="completion-message">
+        <h1>✅</h1>
+        <h2>Thanks, choosing your interests helps us make a more tailored news dashboard.</h2>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      {currentInterestIndex < availableInterests.length ? (
-        <div>
-          <p>{availableInterests[currentInterestIndex]}</p>
-          <button onClick={() => handleSwipe('left')}>Swipe Left</button>
-          <button onClick={() => handleSwipe('right')}>Swipe Right</button>
+    <div
+      className={`interest-selector-container ${swipeDirection === 'left' ? 'bg-red' : swipeDirection === 'right' ? 'bg-green' : ''}`}
+      onMouseMove={handleDrag}
+      onMouseUp={handleDragEnd}
+      onMouseLeave={handleDragEnd}
+    >
+      <div className={`background-half left-half ${swipeDirection === 'right' ? 'hidden' : ''}`}>
+        <div className="label-left">Hate It</div>
+      </div>
+      <div className={`background-half right-half ${swipeDirection === 'left' ? 'hidden' : ''}`}>
+        <div className="label-right">Love It</div>
+      </div>
+      {availableInterests[currentInterestIndex] && (
+        <div
+          {...swipeHandlers}
+          key={currentInterestIndex}
+          className={`interest-card ${animate ? '' : 'no-animation'} ${swipeDirection === 'left' ? 'swipe-left' : ''} ${swipeDirection === 'right' ? 'swipe-right' : ''}`}
+          style={{ transform: `translate(${position.x}px, ${position.y}px)`, cursor: dragging ? 'grabbing' : 'grab' }}
+          onMouseDown={handleDragStart}
+        >
+          <h3>{availableInterests[currentInterestIndex]}</h3>
         </div>
-      ) : (
-        <div>
-          <p>You have selected your interests.</p>
-          <button onClick={handleSubmit}>Save Interests</button>
-        </div>
+      )}
+      {currentInterestIndex >= availableInterests.length && (
+        <button onClick={handleSubmit}>Save Interests</button>
       )}
     </div>
   );

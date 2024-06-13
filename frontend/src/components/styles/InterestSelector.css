@@ -1,0 +1,126 @@
+/* src/components/styles/InterestSelector.css */
+
+.interest-selector-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    background-color: #f5f5f5;
+}
+
+.background-half {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none; 
+}
+
+.left-half {
+    left: 0;
+    background-color: rgba(231, 76, 60, 0.3); /* Light red background */
+}
+
+.right-half {
+    right: 0;
+    background-color: rgba(46, 204, 113, 0.3); /* Light green background */
+}
+
+.label-left,
+.label-right {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    user-select: none; 
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.interest-card {
+    width: 300px;
+    height: 400px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #333;
+    position: absolute;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 1; 
+    cursor: grab;
+}
+
+.interest-card.no-animation {
+    transition: none; /* Disable animation */
+}
+
+.interest-card h3 {
+    margin: 0;
+}
+
+.interest-card.swipe-left {
+    transform: translateX(-100vw) rotate(-20deg);
+    opacity: 0;
+}
+
+.interest-card.swipe-right {
+    transform: translateX(100vw) rotate(20deg);
+    opacity: 0;
+}
+
+.bg-red {
+    background-color: rgba(255, 0, 0, 0.2); /* Red with less opacity */
+}
+
+.bg-green {
+    background-color: rgba(0, 255, 0, 0.2); /* Green with less opacity */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    z-index: 2;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.completion-message {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.completion-message h1 {
+    margin: 0;
+    font-size: 4rem;
+}
+
+.completion-message h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-top: 10px; 
+}

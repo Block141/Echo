@@ -1,4 +1,3 @@
-// src/components/SignUp.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -33,18 +32,14 @@ const SignUp = () => {
         headers: {
           'X-CSRFToken': csrftoken
         },
-        withCredentials: true // Include credentials to send cookies
+        withCredentials: true
       });
       console.log(response.data);
       setSuccess('Account created successfully!');
-      navigate('/confirmation'); // Redirect to confirmation page
+      navigate('/welcome');
     } catch (err) {
       console.error("Error response from server:", err.response);
-      if (err.response && err.response.data && err.response.data.error) {
-        setError(err.response.data.error);
-      } else {
-        setError('Error creating account. Please try again.');
-      }
+      setError(err.response?.data?.error || 'Error creating account. Please try again.');
     }
   };
 

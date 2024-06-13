@@ -1,0 +1,20 @@
+.dashboard {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.caught-up-message {
+  position: absolute; /* Change to absolute to be inside the .dashboard */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 3em; /* Increase the font size */
+  color: #333; /* Change the color if needed */
+  background-color: rgba(255, 255, 255, 0.8); /* Optional: Add a background with some transparency */
+  padding: 20px; /* Add some padding */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}

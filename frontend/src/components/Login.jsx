@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/Login.css';
+import csrftoken from '../csrf';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -16,16 +17,25 @@ const Login = () => {
     setError('');
     setSuccess('');
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/login/`, {
-        email,
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/auth/login/`, {
+        username,
         password,
+      }, {
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        withCredentials: true // Include credentials to send cookies
       });
-      // Handle successful login, e.g., save token, redirect
       console.log(response.data);
       setSuccess('Login successful!');
-      navigate('/dashboard');
+      if (response.data.initial_setup_complete) {
+        navigate('/dashboard');
+      } else {
+        navigate('/interests'); // Redirect to InterestSelector
+      }
     } catch (err) {
-      setError('Invalid email or password');
+      console.error("Error response from server:", err.response);
+      setError('Invalid username or password');
     }
   };
 
@@ -37,12 +47,12 @@ const Login = () => {
       {success && <p className="success">{success}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="username">Username</label>
           <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>

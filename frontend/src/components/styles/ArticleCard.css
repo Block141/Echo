@@ -1,0 +1,12 @@
+.card {
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    padding: 20px;
+  }
+  

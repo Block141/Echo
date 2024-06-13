@@ -1,7 +1,6 @@
-# news/urls.py
 from django.urls import path
-from . import views
+from .views import fetch_articles
 
 urlpatterns = [
-    path('', views.index, name='index'),  # Assuming you have an 'index' view
+    path('fetch_articles/', fetch_articles, name='fetch_articles'),
 ]
