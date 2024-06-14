@@ -1,8 +1,12 @@
 import requests
 from django.http import JsonResponse
+from django.conf import settings
 
-def get_weather(api_key, city):
-    api_key = 'e034bb0455bc73715ce8bb452391ee65'
+def get_weather(request, city=None):
+    api_key = settings.WEATHER_API_KEY
+    default_city = "Chicago"
+    city = city or default_city 
+
     url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
     response = requests.get(url)
     response.raise_for_status()
@@ -19,6 +23,5 @@ def get_weather(api_key, city):
             'temperature': weather_data['main']['temp'],
             'humidity': weather_data['main']['humidity'],
             'wind_speed': weather_data['wind']['speed'],
-            # Add more fields as needed
         }
         return JsonResponse(response_data)
