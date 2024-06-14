@@ -45,7 +45,7 @@ const SignUp = () => {
 
   return (
     <div className="signup-container">
-      <h2>Echo News</h2>
+      <h2>NewsFling</h2>
       <h3>Create Account</h3>
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import axios from 'axios';
 import './styles/InterestSelector.css';
 
 const InterestSelector = () => {
+  const navigate = useNavigate();
   const [interests, setInterests] = useState([]);
   const [currentInterestIndex, setCurrentInterestIndex] = useState(0);
   const [swipeDirection, setSwipeDirection] = useState(null);
@@ -87,6 +89,7 @@ const InterestSelector = () => {
       <div className="completion-message">
         <h1>✅</h1>
         <h2>Thanks, choosing your interests helps us make a more tailored news dashboard.</h2>
+        <button onClick={() => navigate('/dashboard')}>Go to My Dashboard</button>
       </div>
     );
   }

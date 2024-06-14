@@ -12,7 +12,7 @@ const Welcome = () => {
 
   return (
     <div className="welcome-container">
-      <h2>Welcome to Echo News!</h2>
+      <h2>Welcome to NewsFling!</h2>
       <p>We’re glad to have you here. Let’s get started by selecting your interests.</p>
       <button onClick={handleContinue}>Continue</button>
     </div>

@@ -23,7 +23,7 @@ function App() {
           <Route path="/confirmation" element={<Confirmation />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/interests" element={<InterestSelector />} />
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Login />} />
         </Routes>
       </div>
     </Router>
