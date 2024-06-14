@@ -10,3 +10,10 @@
     padding: 20px;
   }
   
+  .card h3 {
+    color: #000; /* Ensure heading text color is set */
+  }
+  
+  .card p {
+    color: #000; /* Ensure paragraph text color is set */
+  }

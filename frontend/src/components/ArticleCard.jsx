@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import './styles/ArticleCard.css';
 
-const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition }) => {
+const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition, isWeatherCard }) => {
   const cardRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: article.position?.x || 0, y: article.position?.y || 0 });
@@ -59,7 +59,7 @@ const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition }) => {
 
     move();
 
-    if (dragStart) {
+    if (dragStart && !isWeatherCard) {
       const dx = Math.abs(dragStart.x - data.x);
       const dy = Math.abs(dragStart.y - data.y);
       if (dx < 5 && dy < 5) {
@@ -67,6 +67,13 @@ const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition }) => {
       } else {
         setIsDragging(true);
       }
+    }
+  };
+
+  const handleCardClick = (e) => {
+    if (isWeatherCard) {
+      e.stopPropagation();
+      e.preventDefault();
     }
   };
 
@@ -82,6 +89,7 @@ const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition }) => {
         className="card"
         ref={cardRef}
         style={{ top: `${position.y}px`, left: `${position.x}px` }}
+        onClick={handleCardClick}
       >
         <h3>{article.title}</h3>
         <p>{article.content}</p>
