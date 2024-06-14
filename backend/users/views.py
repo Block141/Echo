@@ -1,5 +1,3 @@
-# users/views.py
-
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -35,10 +33,7 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             response = JsonResponse({'success': True})
-            if settings.DEBUG:
-                response.set_cookie('csrftoken', 'static-csrf-token')
-            else:
-                response.set_cookie('csrftoken', get_token(request))
+            response.set_cookie('csrftoken', get_token(request))  # Always set the real CSRF token
             return response
         else:
             return JsonResponse({'error': 'Invalid credentials'}, status=400)
@@ -47,8 +42,5 @@ def login(request):
 @csrf_exempt
 def set_csrf_token(request):
     response = JsonResponse({'success': True})
-    if settings.DEBUG:
-        response.set_cookie('csrftoken', 'static-csrf-token')
-    else:
-        response.set_cookie('csrftoken', get_token(request))
+    response.set_cookie('csrftoken', get_token(request))  # Always set the real CSRF token
     return response

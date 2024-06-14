@@ -1,13 +1,10 @@
-# backend/settings.py
 from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-
 SECRET_KEY = "django-insecure-#&r1b$k+vy_vk3oz5le)^k&h==-k&xas@%7i^mm!eevt-2_-0u"
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
@@ -18,27 +15,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
     "news",
     "users",
     "weather",
     "corsheaders",
 ]
 
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    # Disable CSRF middleware in development
-    "django.middleware.csrf.CsrfViewMiddleware" if not DEBUG else None,
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-MIDDLEWARE = [mw for mw in MIDDLEWARE if mw is not None]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
