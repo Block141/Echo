@@ -6,12 +6,8 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Confirmation from './components/Confirmation';
 import Welcome from './components/Welcome';
-import { getCsrfTokenFromServer } from './csrf';
 
 function App() {
-  useEffect(() => {
-    getCsrfTokenFromServer();
-  }, []);
 
   return (
     <Router>

@@ -1,7 +1,9 @@
+// src/components/InterestSelector.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import axios from 'axios';
+import getCsrfToken from '../csrf'; // Function to get the CSRF token from cookies
 import './styles/InterestSelector.css';
 
 const InterestSelector = () => {
@@ -70,8 +72,23 @@ const InterestSelector = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/save-interests/`, { interests });
+      const csrfToken = getCsrfToken(); // Get the CSRF token
+      const token = localStorage.getItem('accessToken'); // Get the JWT token from localStorage
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/save-interests/`, 
+      { 
+        interests 
+      }, 
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'X-CSRFToken': csrfToken
+        },
+        withCredentials: true // Include credentials to send cookies
+      });
       console.log(response.data);
+      if (response.data.success) {
+        setCompleted(true); // Mark as completed if the response is successful
+      }
     } catch (error) {
       console.error(error);
     }

@@ -1,8 +1,8 @@
+// src/components/Login.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { login } from '../api'; // Import the login function
 import './styles/Login.css';
-import getCsrfToken from '../csrf'; // Function to get the CSRF token from cookies
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -16,24 +16,12 @@ const Login = () => {
     setError('');
     setSuccess('');
     try {
-      const csrfToken = getCsrfToken(); // Get the CSRF token
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/auth/login/`, {
-        username,
-        password,
-      }, {
-        headers: {
-          'X-CSRFToken': csrfToken
-        },
-        withCredentials: true // Include credentials to send cookies
-      });
-      console.log(response.data);
+      const data = await login(username, password);
+      console.log(data);
       setSuccess('Login successful!');
       
-      // Store the authentication token in localStorage
-      localStorage.setItem('authToken', response.data.token);
-      
       // Navigate based on initial setup status
-      if (response.data.initial_setup_complete) {
+      if (data.initial_setup_complete) {
         navigate('/dashboard');
       } else {
         navigate('/interests'); // Redirect to InterestSelector
@@ -59,6 +47,7 @@ const Login = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            autoComplete="username"
           />
         </div>
         <div className="form-group">
@@ -69,6 +58,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            autoComplete='current-password'
           />
         </div>
         <button type="submit">Login</button>

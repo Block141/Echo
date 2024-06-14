@@ -1,3 +1,4 @@
+// src/components/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import ArticleCard from './ArticleCard';
 import FullScreenArticle from './FullScreenArticle';
@@ -15,19 +16,19 @@ const Dashboard = () => {
     const loadArticles = async () => {
       try {
         const fetchedArticles = await fetchArticles();
-        if (fetchedArticles.status && fetchedArticles.status === 'error' && fetchedArticles.code === 'rateLimited') {
+        if (fetchedArticles.error && fetchedArticles.code === 'rateLimited') {
           setErrorMessage('API rate limit exceeded. Please try again later.');
           return;
         }
 
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
-        const cardWidth = 1000; // Assume the width of the card
-        const cardHeight = 700; // Assume the height of the card
+        const cardWidth = 300; // Adjusted width of the card
+        const cardHeight = 400; // Adjusted height of the card
 
         setArticles(fetchedArticles.map(article => {
-          const offsetX = (Math.random() - 0.5) * 400; // Random offset between -100 and 100
-          const offsetY = (Math.random() - 0.5) * 400; // Random offset between -100 and 100
+          const offsetX = (Math.random() - 0.5) * 100; // Random offset between -50 and 50
+          const offsetY = (Math.random() - 0.5) * 100; // Random offset between -50 and 50
 
           return {
             ...article,
@@ -39,6 +40,7 @@ const Dashboard = () => {
         }));
       } catch (error) {
         console.error('Failed to load articles:', error);
+        setErrorMessage('Failed to load articles. Please try again later.');
       }
     };
 

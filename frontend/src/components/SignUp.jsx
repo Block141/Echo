@@ -1,8 +1,9 @@
+// src/components/SignUp.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/SignUp.css';
-import csrftoken from '../csrf';
+import getCsrfToken from '../csrf';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -24,13 +25,14 @@ const SignUp = () => {
     }
 
     try {
+      const csrfToken = getCsrfToken(); // Get the CSRF token
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/auth/signup/`, {
         email,
         username,
         password,
       }, {
         headers: {
-          'X-CSRFToken': csrftoken
+          'X-CSRFToken': csrfToken
         },
         withCredentials: true
       });
@@ -58,6 +60,7 @@ const SignUp = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete='email'
           />
         </div>
         <div className="form-group">
@@ -68,6 +71,7 @@ const SignUp = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            autoComplete='username'
           />
         </div>
         <div className="form-group">
@@ -78,6 +82,7 @@ const SignUp = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            autoComplete='new-password'
           />
         </div>
         <div className="form-group">
@@ -88,6 +93,7 @@ const SignUp = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            autoComplete='new-password'
           />
         </div>
         <button type="submit">Create Account</button>

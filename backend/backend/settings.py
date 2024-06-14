@@ -1,9 +1,13 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-SECRET_KEY = "django-insecure-#&r1b$k+vy_vk3oz5le)^k&h==-k&xas@%7i^mm!eevt-2_-0u"
+SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-key")
+NEWS_API_KEY =os.getenv("NEWS_API_KEY")
+
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ["*"]
 
