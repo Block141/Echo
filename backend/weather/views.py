@@ -22,15 +22,3 @@ def get_weather(api_key, city):
             # Add more fields as needed
         }
         return JsonResponse(response_data)
-
-
-
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
-        return response.json()
-    except requests.RequestException as e:
-        # Log the error for debugging purposes
-        print(f"Request to OpenWeatherMap API failed: {e}")
-        return {'error': 'Failed to fetch weather data'}

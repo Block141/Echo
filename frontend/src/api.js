@@ -21,9 +21,7 @@ api.interceptors.request.use((config) => {
 
 export const fetchArticles = async () => {
   try {
-    console.log('Sending request to fetch articles'); // Add log
     const response = await api.post('/api/news/fetch_articles/', {});
-    console.log('Response:', response); // Add log
     return response.data.articles;
   } catch (error) {
     console.error('Failed to fetch articles:', error.response); // Update log to include error response
