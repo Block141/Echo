@@ -17,17 +17,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    user-select: none; /* Disable text selection */
+    user-select: none; 
 }
 
 .left-half {
     left: 0;
-    background-color: rgba(231, 76, 60, 0.3); /* Light red background */
+    background-color: rgba(231, 76, 60, 0.3); 
 }
 
 .right-half {
     right: 0;
-    background-color: rgba(46, 204, 113, 0.3); /* Light green background */
+    background-color: rgba(46, 204, 113, 0.3); 
 }
 
 .label-left,
@@ -35,7 +35,7 @@
     font-size: 2rem;
     font-weight: bold;
     color: #fff;
-    user-select: none; /* Disable text selection */
+    user-select: none; 
 }
 
 .hidden {
@@ -56,12 +56,12 @@
     color: #333;
     position: absolute;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    z-index: 1; /* Ensure the card is above the background labels */
+    z-index: 1; 
     cursor: grab;
 }
 
 .interest-card.no-animation {
-    transition: none; /* Disable animation */
+    transition: none; 
 }
 
 .interest-card h3 {
@@ -79,11 +79,11 @@
 }
 
 .bg-red {
-    background-color: rgba(255, 0, 0, 0.2); /* Red with less opacity */
+    background-color: rgba(255, 0, 0, 0.2); 
 }
 
 .bg-green {
-    background-color: rgba(0, 255, 0, 0.2); /* Green with less opacity */
+    background-color: rgba(0, 255, 0, 0.2); 
 }
 
 button {

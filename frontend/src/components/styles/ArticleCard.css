@@ -11,10 +11,10 @@
   }
   
   .card h3 {
-    color: #000; /* Ensure heading text color is set */
+    color: #000; /* text color */
   }
   
   .card p {
     white-space: pre-line;
-    color: #000; /* Ensure paragraph text color is set */
+    color: #000; /* text color */
   }

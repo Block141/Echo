@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import axios from 'axios';
-import getCsrfToken from '../csrf'; // Function to get the CSRF token from cookies
+import getCsrfToken from '../csrf'; 
 import './styles/InterestSelector.css';
 
 const InterestSelector = () => {
@@ -19,14 +19,14 @@ const InterestSelector = () => {
   const availableInterests = [
     'Politics', 'Technology', 'Automotive', 'Sports', 'Health', 'Travel',
     'Science', 'Entertainment', 'Fashion', 'Finance', 'Food', 'Gaming', 
-    'History', 'Music', 'Nature', 'Photography', 'Space', 'Startup', 'World News'
+    'History', 'Music', 'Nature', 'Photography', 'Space', 'Startups', 'World News'
   ];
 
   const SWIPE_RESET_DELAY = 500; 
 
   const handleSwipe = (direction) => {
     setSwipeDirection(direction);
-    setAnimate(false); // Disable animation
+    setAnimate(false); 
     setTimeout(async () => {
       if (direction === 'right') {
         setInterests([...interests, availableInterests[currentInterestIndex]]);
@@ -41,8 +41,8 @@ const InterestSelector = () => {
       setSwipeDirection(null);
       setPosition({ x: 0, y: 0 });
       setOffset({ x: 0, y: 0 });
-      setAnimate(true); // Re-enable animation
-    }, SWIPE_RESET_DELAY); // Delay to match the animation duration
+      setAnimate(true); 
+    }, SWIPE_RESET_DELAY); 
   };
 
   const handleDragStart = (e) => {
@@ -72,8 +72,8 @@ const InterestSelector = () => {
 
   const handleSubmit = async () => {
     try {
-      const csrfToken = getCsrfToken(); // Get the CSRF token
-      const token = localStorage.getItem('accessToken'); // Get the JWT token from localStorage
+      const csrfToken = getCsrfToken(); 
+      const token = localStorage.getItem('accessToken'); 
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/save-interests/`, 
       { 
         interests 
@@ -83,11 +83,10 @@ const InterestSelector = () => {
           'Authorization': `Bearer ${token}`,
           'X-CSRFToken': csrfToken
         },
-        withCredentials: true // Include credentials to send cookies
+        withCredentials: true 
       });
-      console.log(response.data);
       if (response.data.success) {
-        setCompleted(true); // Mark as completed if the response is successful
+        setCompleted(true); 
       }
     } catch (error) {
       console.error(error);

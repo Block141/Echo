@@ -187,3 +187,5 @@ yarn-error.log
 
 # Windows specific
 Thumbs.db
+
+*.pem

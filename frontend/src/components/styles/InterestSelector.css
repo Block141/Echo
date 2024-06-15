@@ -22,12 +22,12 @@
 
 .left-half {
     left: 0;
-    background-color: rgba(231, 76, 60, 0.3); /* Light red background */
+    background-color: rgba(231, 76, 60, 0.3); 
 }
 
 .right-half {
     right: 0;
-    background-color: rgba(46, 204, 113, 0.3); /* Light green background */
+    background-color: rgba(46, 204, 113, 0.3);
 }
 
 .label-left,
@@ -61,7 +61,7 @@
 }
 
 .interest-card.no-animation {
-    transition: none; /* Disable animation */
+    transition: none; 
 }
 
 .interest-card h3 {
@@ -79,11 +79,11 @@
 }
 
 .bg-red {
-    background-color: rgba(255, 0, 0, 0.2); /* Red with less opacity */
+    background-color: rgba(255, 0, 0, 0.2); 
 }
 
 .bg-green {
-    background-color: rgba(0, 255, 0, 0.2); /* Green with less opacity */
+    background-color: rgba(0, 255, 0, 0.2); 
 }
 
 button {

@@ -20,13 +20,13 @@ def signup(request):
         email = data.get('email')
         username = data.get('username')
         password = data.get('password')
-        city = data.get('city')  # Get the city from the request
+        city = data.get('city')  
         if not email or not username or not password or not city:
             return JsonResponse({'error': 'Missing fields'}, status=400)
         if User.objects.filter(username=username).exists():
             return JsonResponse({'error': 'Username already exists'}, status=400)
         user = User.objects.create_user(username=username, email=email, password=password)
-        user_profile = UserProfile.objects.create(user=user, location=city)  # Save the city to the location field
+        user_profile = UserProfile.objects.create(user=user, location=city)  
         user.save()
         user_profile.save()
         return JsonResponse({'success': 'User created successfully'}, status=201)
@@ -50,7 +50,7 @@ def login(request):
                 'refresh': str(refresh),
                 'initial_setup_complete': user_profile.initial_setup_complete
             })
-            response.set_cookie('csrftoken', get_token(request))  # Always set the real CSRF token
+            response.set_cookie('csrftoken', get_token(request))
             return response
         else:
             return JsonResponse({'error': 'Invalid credentials'}, status=400)
@@ -94,5 +94,5 @@ def user_profile(request):
 @csrf_exempt
 def set_csrf_token(request):
     response = JsonResponse({'success': True})
-    response.set_cookie('csrftoken', get_token(request))  # Always set the real CSRF token
+    response.set_cookie('csrftoken', get_token(request))
     return response

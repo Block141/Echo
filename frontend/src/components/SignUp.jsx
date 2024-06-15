@@ -9,7 +9,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [city, setCity] = useState(''); // New state for the city
+  const [city, setCity] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -26,7 +26,7 @@ const SignUp = () => {
     }
 
     try {
-      const csrfToken = getCsrfToken(); // Get the CSRF token
+      const csrfToken = getCsrfToken();
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/auth/signup/`, {
         email,
         username,
@@ -37,7 +37,6 @@ const SignUp = () => {
         },
         withCredentials: true
       });
-      console.log(response.data);
       setSuccess('Account created successfully!');
       navigate('/welcome');
     } catch (err) {

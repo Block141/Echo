@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import ArticleCard from './ArticleCard'; // Import the ArticleCard component
+import ArticleCard from './ArticleCard'; 
 import './styles/TopMenu.css';
 import getCsrfToken from '../csrf';
 
@@ -11,13 +11,13 @@ const TopMenu = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [cards, setCards] = useState([]);
-  const [userCity, setUserCity] = useState('Chicago'); // Default to Chicago initially
+  const [userCity, setUserCity] = useState('Chicago'); 
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const csrfToken = getCsrfToken(); // Get the CSRF token
-        const token = localStorage.getItem('accessToken'); // Get the JWT token from localStorage
+        const csrfToken = getCsrfToken(); 
+        const token = localStorage.getItem('accessToken'); 
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/users/profile/`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -39,16 +39,10 @@ const TopMenu = () => {
   }, []);
 
   const handleLogout = () => {
-    console.log('Logout clicked');
-    // Clear any authentication tokens or session data
-    localStorage.removeItem('accessToken'); // Replace 'accessToken' with your actual token key
-    sessionStorage.removeItem('accessToken'); // If you use sessionStorage
-
-    // Optionally clear other user-specific data
-    localStorage.removeItem('user'); // Replace 'user' with your actual user data key
-
-    // Redirect to the login page or home page
-    navigate('/login'); // Adjust the path as necessary
+    localStorage.removeItem('accessToken'); 
+    sessionStorage.removeItem('accessToken'); 
+    localStorage.removeItem('user'); 
+    navigate('/login'); 
   };
 
   const toggleWeather = async () => {
@@ -56,13 +50,10 @@ const TopMenu = () => {
 
     if (!weatherData && !loading && !error) {
       const endpoint = `${process.env.REACT_APP_API_BASE_URL}/api/weather/${userCity}/`;
-      console.log('API Endpoint:', endpoint); // Log the endpoint to console
-
       try {
         setLoading(true);
         const response = await axios.get(endpoint);
         if (response.status === 200) {
-          console.log('Weather Data:', response.data); // Log the weather data
           setWeatherData(response.data);
           if (existingWeatherCardIndex === -1) {
             addWeatherCard(response.data);
@@ -132,7 +123,7 @@ const TopMenu = () => {
             article={card}
             onRemove={handleRemoveCard}
             onUpdatePosition={handleUpdatePosition}
-            isWeatherCard={card.url === 'weather'} // Pass the isWeatherCard prop
+            isWeatherCard={card.url === 'weather'}
           />
         ))}
       </div>

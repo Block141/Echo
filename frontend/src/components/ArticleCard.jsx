@@ -4,13 +4,11 @@ import './styles/ArticleCard.css';
 
 const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition, isWeatherCard }) => {
   const cardRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: article.position?.x || 0, y: article.position?.y || 0 });
   const [dragStart, setDragStart] = useState(null);
 
   const handleStart = (e, data) => {
     setDragStart({ x: data.x, y: data.y });
-    setIsDragging(false);
   };
 
   const handleDrag = (e, data) => {
@@ -20,8 +18,9 @@ const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition, isWeatherCa
   const handleStop = (e, data) => {
     const vx = data.lastX - data.x;
     const vy = data.lastY - data.y;
-    const friction = 0.95; // Adjust this value for more or less friction
+    const friction = 0.95; 
 
+    // v = d/t
     const move = () => {
       const currentX = parseFloat(cardRef.current.style.left || 0);
       const currentY = parseFloat(cardRef.current.style.top || 0);
@@ -37,7 +36,7 @@ const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition, isWeatherCa
 
       setPosition({ x: newX, y: newY });
 
-      // Check if the card is out of bounds
+      // Out of bounds logic.
       const cardWidth = cardRef.current.offsetWidth;
       const cardHeight = cardRef.current.offsetHeight;
       const outOfBounds = (
@@ -53,7 +52,6 @@ const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition, isWeatherCa
         requestAnimationFrame(move);
       } else {
         onUpdatePosition(article.url, { x: newX, y: newY });
-        setIsDragging(false);
       }
     };
 
@@ -65,7 +63,6 @@ const ArticleCard = ({ article, onClick, onRemove, onUpdatePosition, isWeatherCa
       if (dx < 5 && dy < 5) {
         onClick();
       } else {
-        setIsDragging(true);
       }
     }
   };

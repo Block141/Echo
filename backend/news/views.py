@@ -28,7 +28,7 @@ def fetch_articles(request):
             'apiKey': settings.NEWS_API_KEY,
             'pageSize': 20  # Fetch more articles to increase chances of valid ones
         })
-        print("DEBUG: Raw response data:", response.text)  # Log the raw response data
+        print("DEBUG: Raw response data:", response.text) 
         if response.status_code == 200:
             articles = response.json().get('articles', [])
             valid_articles = []

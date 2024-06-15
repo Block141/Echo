@@ -10,7 +10,6 @@ const Dashboard = () => {
   const [fullscreenArticle, setFullscreenArticle] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(true); 
-  const [weatherVisible, setWeatherVisible] = useState(false); 
 
   useEffect(() => {
     const loadArticles = async () => {
@@ -71,12 +70,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log('Current articles:', articles); 
+    console.log('Current articles:', articles.length); 
   }, [articles]); 
 
   return (
     <div className="dashboard">
-      <TopMenu setWeatherVisible={setWeatherVisible} />
+      <TopMenu  />
       {loading ? (
         <div className="loading-message">Loading articles...</div>
       ) : errorMessage ? (

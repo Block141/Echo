@@ -1,10 +1,10 @@
 // src/api.js
 import axios from 'axios';
-import getCsrfToken from './csrf'; // Function to get the CSRF token from cookies
+import getCsrfToken from './csrf'; 
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
-  withCredentials: true, // Include credentials to send cookies
+  withCredentials: true, 
 });
 
 api.interceptors.request.use((config) => {
@@ -24,13 +24,13 @@ export const fetchArticles = async () => {
     const response = await api.post('/api/news/fetch_articles/', {});
     return response.data.articles;
   } catch (error) {
-    console.error('Failed to fetch articles:', error.response); // Update log to include error response
+    console.error('Failed to fetch articles:', error.response); 
     throw new Error('Failed to fetch articles');
   }
 };
 
 export const login = async (username, password) => {
-  const csrfToken = getCsrfToken(); // Get the CSRF token
+  const csrfToken = getCsrfToken(); 
   const response = await api.post('/api/users/auth/login/', { username, password }, {
     headers: {
       'X-CSRFToken': csrfToken,
@@ -38,7 +38,6 @@ export const login = async (username, password) => {
     withCredentials: true,
   });
 
-  // Store the access and refresh tokens in localStorage
   localStorage.setItem('accessToken', response.data.access);
   localStorage.setItem('refreshToken', response.data.refresh);
 

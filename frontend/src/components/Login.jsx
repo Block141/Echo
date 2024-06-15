@@ -1,7 +1,7 @@
 // src/components/Login.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../api'; // Import the login function
+import { login } from '../api'; 
 import './styles/Login.css';
 
 const Login = () => {
@@ -17,14 +17,13 @@ const Login = () => {
     setSuccess('');
     try {
       const data = await login(username, password);
-      console.log(data);
       setSuccess('Login successful!');
       
-      // Navigate based on initial setup status
+      // First time user?
       if (data.initial_setup_complete) {
         navigate('/dashboard');
       } else {
-        navigate('/interests'); // Redirect to InterestSelector
+        navigate('/interests'); 
       }
     } catch (err) {
       console.error("Error response from server:", err.response);
