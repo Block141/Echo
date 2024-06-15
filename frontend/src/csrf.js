@@ -13,6 +13,7 @@ const getCookie = (name) => {
     }
   }
   return cookieValue;
+  
 };
 
 const getCsrfToken = () => getCookie('csrftoken');
