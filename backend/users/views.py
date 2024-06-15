@@ -20,12 +20,15 @@ def signup(request):
         email = data.get('email')
         username = data.get('username')
         password = data.get('password')
-        if not email or not username or not password:
+        city = data.get('city')  # Get the city from the request
+        if not email or not username or not password or not city:
             return JsonResponse({'error': 'Missing fields'}, status=400)
         if User.objects.filter(username=username).exists():
             return JsonResponse({'error': 'Username already exists'}, status=400)
         user = User.objects.create_user(username=username, email=email, password=password)
+        user_profile = UserProfile.objects.create(user=user, location=city)  # Save the city to the location field
         user.save()
+        user_profile.save()
         return JsonResponse({'success': 'User created successfully'}, status=201)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
@@ -75,6 +78,18 @@ def save_interests(request):
 
     return Response({'success': 'Interests saved successfully'}, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_profile(request):
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    profile_data = {
+        'username': user.username,
+        'email': user.email,
+        'location': user_profile.location,
+        'initial_setup_complete': user_profile.initial_setup_complete
+    }
+    return Response(profile_data)
 
 @csrf_exempt
 def set_csrf_token(request):

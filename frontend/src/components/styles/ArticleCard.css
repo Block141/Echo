@@ -15,5 +15,6 @@
   }
   
   .card p {
+    white-space: pre-line;
     color: #000; /* Ensure paragraph text color is set */
   }

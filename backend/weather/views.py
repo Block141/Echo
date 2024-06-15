@@ -7,7 +7,7 @@ def get_weather(request, city=None):
     default_city = "Chicago"
     city = city or default_city 
 
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=imperial'
     response = requests.get(url)
     response.raise_for_status()
     

@@ -9,6 +9,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [city, setCity] = useState(''); // New state for the city
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -94,6 +95,17 @@ const SignUp = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             autoComplete='new-password'
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="city">City</label>
+          <input
+            type="text"
+            id="city"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            required
+            autoComplete='address-level2'
           />
         </div>
         <button type="submit">Create Account</button>
